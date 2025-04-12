@@ -26,7 +26,7 @@ function App() {
           </a>
 
           <a
-            href="/Harshit_s_CV.pdf"
+            href="/Harshit_webdev_CV.pdf"
             download
             className="text-white text-sm flex flex-col items-center justify-center group"
           >
