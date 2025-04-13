@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { StarBackground } from './components/StarBackground';
 import { ContactForm } from './components/ContactForm';
 import { TypedText } from './components/TypedText';
@@ -8,13 +9,41 @@ import { motion } from 'framer-motion';
 import { Github, Linkedin, Mail, Download } from 'lucide-react';
 
 function App() {
+  useEffect(() => {
+    const cursor = document.getElementById('custom-cursor');
+    const moveCursor = (e: MouseEvent) => {
+      if (cursor) {
+        cursor.style.top = `${e.clientY}px`;
+        cursor.style.left = `${e.clientX}px`;
+      }
+    };
+    window.addEventListener('mousemove', moveCursor);
+    return () => window.removeEventListener('mousemove', moveCursor);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-900 text-white relative">
       <StarBackground />
 
-      {/* Custom Vertical Navigation */}
+      {/* Custom Cursor */}
+      <div id="custom-cursor">
+        <div className="cursor-light" />
+        <svg
+          className="cursor-arrow"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#00ffaa"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M4 4L20 12L4 20L4 4Z" />
+        </svg>
+      </div>
+
       <nav className="fixed top-0 left-0 w-20 h-screen flex flex-col items-center justify-between py-8 bg-black/20 backdrop-blur-sm border-r border-white/10">
-        {/* Top Icons */}
         <div className="flex flex-col items-center space-y-10">
           <a
             href="https://github.com/Harshitsoni294"
@@ -24,7 +53,6 @@ function App() {
           >
             <Github size={20} />
           </a>
-
           <a
             href="/Harshit_webdev_CV.pdf"
             download
@@ -38,11 +66,8 @@ function App() {
             </span>
           </a>
         </div>
-
-        {/* Email at bottom */}
         <a
-          href="https://mail.google.com/mail/?view=cm&fs=1&to=harshitsoni2026@gmail.com&su=Impressed%20by%20Your%20Portfolio%20%E2%80%93%20Let%27s%20Connect!&body=Hi%20Harshit%2C%0A%0AI%20came%20across%20your%20portfolio.%20Your%20work%20aligns%20with%20some%20roles%20we%E2%80%99re%20currently%20hiring%20for%20at%20%5BCompany%20Name%5D.%0A%0ALet%20me%20know%20if%20you%27d%20be%20open%20to%20a%20quick%20conversation.%0A%0ABest%2C%0A%5BRecruiter%27s%20Name%5D%0A%5BCompany%20Name%5D
-"
+          href="https://mail.google.com/mail/?view=cm&fs=1&to=harshitsoni2026@gmail.com&su=Impressed%20by%20Your%20Portfolio%20%E2%80%93%20Let%27s%20Connect!&body=Hi%20Harshit%2C%0A%0AI%20came%20across%20your%20portfolio.%20Your%20work%20aligns%20with%20some%20roles%20we%E2%80%99re%20currently%20hiring%20for%20at%20%5BCompany%20Name%5D.%0A%0ALet%20me%20know%20if%20you%27d%20be%20open%20to%20a%20quick%20conversation.%0A%0ABest%2C%0A%5BRecruiter%27s%20Name%5D%0A%5BCompany%20Name%5D"
           target="_blank"
           rel="noopener noreferrer"
           className="text-white text-lg rotate-180 [writing-mode:vertical-rl] hover:text-emerald-300"
@@ -52,114 +77,89 @@ function App() {
       </nav>
 
       <main className="pl-24 pr-8 py-16 space-y-32">
-        {/* Hero Section */}
-<section id="about" className="min-h-screen flex items-center px-6">
-  <div className="flex flex-col md:flex-row items-center max-w-7xl mx-auto w-full">
-    <div className="hidden md:flex w-full md:w-1/2 justify-end relative mb-10 md:mb-0">
-      <div className="relative w-80 h-80">
-        <img
-          src="/harrs.png"
-          alt="Harshit Soni"
-          className="w-full h-full object-contain rounded-xl shadow-lg"
-          style={{
-            maskImage: 'linear-gradient(to bottom, black, transparent)',
-            WebkitMaskImage: 'linear-gradient(to bottom, black, transparent)',
-          }}
-        />
-        <div className="absolute top-0 right-[-1px] h-full w-1 bg-emerald-400"></div>
-      </div>
-    </div>
+        <section id="about" className="min-h-screen flex items-center px-6">
+          <div className="flex flex-col md:flex-row items-center max-w-7xl mx-auto w-full">
+            <div className="hidden md:flex w-full md:w-1/2 justify-end relative mb-10 md:mb-0">
+              <div className="relative w-80 h-80">
+                <img
+                  src="/harrs.png"
+                  alt="Harshit Soni"
+                  className="w-full h-full object-contain rounded-xl shadow-lg"
+                  style={{
+                    maskImage: 'linear-gradient(to bottom, black, transparent)',
+                    WebkitMaskImage: 'linear-gradient(to bottom, black, transparent)',
+                  }}
+                />
+                <div className="absolute top-0 right-[-1px] h-full w-1 bg-emerald-400"></div>
+              </div>
+            </div>
+            <div className="w-full md:w-1/2 md:pl-16">
+              <motion.h1
+                className="text-6xl md:text-7xl font-bold mb-8 leading-tight"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                Hello, I'm
+                <span className="block text-emerald-400">Harshit Soni</span>
+              </motion.h1>
 
-    <div className="w-full md:w-1/2 md:pl-16">
-      <motion.h1
-        className="text-6xl md:text-7xl font-bold mb-8 leading-tight"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        Hello, I'm
-        <span className="block text-emerald-400">Harshit Soni</span>
-      </motion.h1>
+              <motion.div
+                className="text-2xl md:text-3xl text-white mb-10"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.1 }}
+              >
+                <TypedText
+                  strings={[
+                    '👨‍💻 Passionate Programmer...',
+                    '🧩 Full Stack Developer...',
+                    '🎓 B.Tech Student on a Mission...',
+                    '🎨 Creative Designer with a Vision...',
+                  ]}
+                />
+              </motion.div>
 
-      <motion.div
-        className="text-2xl md:text-3xl text-white mb-10"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.1 }}
-      >
-        <TypedText
-          strings={[
-            '👨‍💻 Passionate Programmer...',
-            '🧩 Full Stack Developer...',
-            '🎓 B.Tech Student on a Mission...',
-            '🎨 Creative Designer with a Vision...',
-          ]}
-        />
-      </motion.div>
+              <motion.p
+                className="text-lg md:text-xl text-gray-300 mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                Bringing ideas to life through code.
+              </motion.p>
 
-      <motion.p
-        className="text-lg md:text-xl text-gray-300 mb-8"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-      >
-        Bringing ideas to life through code.
-      </motion.p>
-
-      <motion.div
-        className="flex space-x-8"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.3 }}
-      >
-        <a
-          href="https://www.linkedin.com/in/harshitsoni29"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-gray-300 hover:text-emerald-400 transition-colors duration-300"
-        >
-          <Linkedin size={36} />
-        </a>
-        <a
-          href="https://mail.google.com/mail/?view=cm&fs=1&to=harshitsoni2026@gmail.com&su=Impressed%20by%20Your%20Portfolio%20%E2%80%93%20Let%27s%20Connect!&body=Hi%20Harshit%2C%0A%0AI%20came%20across%20your%20portfolio.%20Your%20work%20aligns%20with%20some%20roles%20we%E2%80%99re%20currently%20hiring%20for%20at%20%5BCompany%20Name%5D.%0A%0ALet%20me%20know%20if%20you%27d%20be%20open%20to%20a%20quick%20conversation.%0A%0ABest%2C%0A%5BRecruiter%27s%20Name%5D%0A%5BCompany%20Name%5D"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-gray-300 hover:text-emerald-400 transition-colors duration-300"
-        >
-          <Mail size={36} />
-        </a>
-        <a
-          href="https://github.com/Harshitsoni294"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-gray-300 hover:text-emerald-400 transition-colors duration-300"
-        >
-          <Github size={36} />
-        </a>
-      </motion.div>
-    </div>
-  </div>
-</section>
+              <motion.div
+                className="flex space-x-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+              >
+                <a href="https://www.linkedin.com/in/harshitsoni29" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-emerald-400 transition-colors duration-300">
+                  <Linkedin size={36} />
+                </a>
+                <a href="mailto:harshitsoni2026@gmail.com" className="text-gray-300 hover:text-emerald-400 transition-colors duration-300">
+                  <Mail size={36} />
+                </a>
+                <a href="https://github.com/Harshitsoni294" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-emerald-400 transition-colors duration-300">
+                  <Github size={36} />
+                </a>
+              </motion.div>
+            </div>
+          </div>
+        </section>
 
         <AboutSection />
         <Skills />
 
-        {/* Projects Section */}
         <section id="projects" className="min-h-screen">
-          <motion.h2
-            className="text-4xl font-bold text-emerald-400 mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
+          <motion.h2 className="text-4xl font-bold text-emerald-400 mb-12" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
             Projects
           </motion.h2>
           <VirtualLaptop />
         </section>
-
-        {/* Experience Section */}
-        <section id="experience" className="min-h-screen">
+{/* Experience Section */}
+<section id="experience" className="min-h-screen">
           <h2 className="text-4xl font-bold text-emerald-400 mb-12">Roles of responsibilities</h2>
           <div className="space-y-8">
             <div className="bg-black/30 backdrop-blur-sm rounded-xl p-6 border border-white/10">
@@ -224,7 +224,7 @@ function App() {
     </div>
   </div>
 </section>
-        {/* Contact Section */}
+
         <section id="contact" className="min-h-screen">
           <h2 className="text-4xl font-bold text-emerald-400 mb-12">Get in Touch</h2>
           <ContactForm />
@@ -234,4 +234,4 @@ function App() {
   );
 }
 
-export default App; 
+export default App;

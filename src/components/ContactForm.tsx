@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import { Mail, MapPin, Phone, Github, Linkedin, Twitter } from 'lucide-react';
+import { Send, Mail, MapPin, Phone, Github, Linkedin, Twitter } from 'lucide-react';
 
 const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL || '',
@@ -51,12 +51,16 @@ export const ContactForm = () => {
           </div>
           
           <div className="flex items-center space-x-3">
-            <Mail className="text-emerald-400" />
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=harshitsoni2026@gmail.com&su=Impressed%20by%20Your%20Portfolio%20%E2%80%93%20Let%27s%20Connect!&body=Hi%20Harshit%2C%0A%0AI%20came%20across%20your%20portfolio.%20Your%20work%20aligns%20with%20some%20roles%20we%E2%80%99re%20currently%20hiring%20for%20at%20%5BCompany%20Name%5D.%0A%0ALet%20me%20know%20if%20you%27d%20be%20open%20to%20a%20quick%20conversation.%0A%0ABest%2C%0A%5BRecruiter%27s%20Name%5D%0A%5BCompany%20Name%5D
-" className="text-gray-300 hover:text-emerald-400">
-              harshitsoni2026@gmail.com
-            </a>
-          </div>
+  <a
+    href="https://mail.google.com/mail/?view=cm&fs=1&to=harshitsoni2026@gmail.com&su=Impressed%20by%20Your%20Portfolio%20%E2%80%93%20Let%27s%20Connect!&body=Hi%20Harshit%2C%0A%0AI%20came%20across%20your%20portfolio.%20Your%20work%20aligns%20with%20some%20roles%20we%E2%80%99re%20currently%20hiring%20for%20at%20%5BCompany%20Name%5D.%0A%0ALet%20me%20know%20if%20you%27d%20be%20open%20to%20a%20quick%20conversation.%0A%0ABest%2C%0A%5BRecruiter%27s%20Name%5D%0A%5BCompany%20Name%5D"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex items-center px-4 py-2 bg-emerald-500 text-white rounded-xl hover:bg-white hover:text-emerald-500 border border-emerald-500 transition-all duration-300"
+  >
+    <Send className="mr-2 h-5 w-5" />
+    Hit My Virtual Door
+  </a>
+</div>
           
         </div>
 
