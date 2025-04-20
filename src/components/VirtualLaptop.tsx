@@ -43,7 +43,7 @@ const projects: Project[] = [
 const projectLinks: Record<string, string> = {
   fest: "https://stavyaweb.vercel.app/",
   gate: "https://icdautoentry.vercel.app/",
-  tts: "https://colab.research.google.com/drive/1w6b1EfcpAT5zH7-ODwXFxI6n0FEsABHq#scrollTo=5VONPntPY4Dx",
+  tts: "https://huggingface.co/spaces/Harshitsoni294/Text-to-speech",
   enhancer: "https://github.com/Harshitsoni294/fuzzy_intensification",
 };
 
