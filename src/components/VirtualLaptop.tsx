@@ -21,6 +21,14 @@ const projects: Project[] = [
       "chess.png",
   },
   {
+    id: "fest",
+    name: "VoiceAgent",
+    description: "AI Agent using MCP servers & RAG, voice input/output. Real-time speech with WebRTC. Manages tasks via LLMs & vector DB.",
+    technologies: ["React", "FastAPI", "LangChain", "ChromaDB", "WebRTC", "MCP"],
+    demoUrl: "https://agent.harshitsoni.me/",
+    screenshot: "/agent.png",
+  },
+  {
     id: "tts",
     name: "Speech Synthesis",
     description: "Tacotron2 + HiFi-GAN for natural speech. Gradio UI for instant text-to-speech. My own cloned voice deployment.",
@@ -38,14 +46,7 @@ const projects: Project[] = [
     screenshot:
       "sentix.png",
   },
-  {
-    id: "fest",
-    name: "Stavya",
-    description: "Event registrations & schedules. Tailwind UI/UX for modern design. Built for festival-scale traffic.",
-    technologies: ["React", "TypeScript", "Tailwind CSS"],
-    demoUrl: "https://stavyaweb.vercel.app/",
-    screenshot: "/fest.jpg",
-  },
+  
   {
     id: "gate",
     name: "Auto-Entry",
