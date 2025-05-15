@@ -66,18 +66,17 @@ function App() {
             <Menu size={20} />
           </button>
 
+
           <a
             href="https://github.com/Harshitsoni294"
-            target="_blank"
-            rel="noopener noreferrer"
             className="bg-white/10 p-3 rounded-full text-emerald-400 hover:bg-white hover:text-emerald-500 transition-colors"
           >
             <Github size={20} />
           </a>
 
           <a
-  href="Harshit_CV.pdf"
-  download="HarshitSoni_CV.pdf"
+  href="/resume.pdf"
+  download="Harshit_CV.pdf"
   className="text-white text-sm flex flex-col items-center justify-center group"
 >
   <div className="bg-white/10 p-3 rounded-full mb-1 text-emerald-400 group-hover:bg-white group-hover:text-emerald-500 transition-colors">
@@ -124,8 +123,8 @@ function App() {
           </a>
 
           <a
-            href="/Harshit_CV.pdf"
-            download="Harshit_Soni_CV.pdf"
+            href="/resume.pdf"
+            download="Harshit_CV.pdf"
             className="flex-1 h-full flex flex-col items-center justify-center text-emerald-400"
           >
             <Download size={24} />

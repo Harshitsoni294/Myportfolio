@@ -90,7 +90,7 @@ export const TerminalLoader = ({ onComplete }: TerminalLoaderProps) => {
             </a>
 
             <a
-              href="/Harshit_CV.pdf"
+              href="/resume.pdf"
               download
               className="text-white text-sm flex flex-col items-center justify-center group"
             >
@@ -136,7 +136,7 @@ export const TerminalLoader = ({ onComplete }: TerminalLoaderProps) => {
             </a>
 
             <a
-              href="/Harshit_CV.pdf"
+              href="/resume.pdf"
               download
               className="flex-1 h-full flex flex-col items-center justify-center text-emerald-400"
             >
