@@ -1,118 +1,307 @@
 'use client';
-import { useRef, useEffect } from 'react';
-import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 export const AboutSection = () => {
-  const cardRef = useRef(null);
-  const x = useMotionValue(0.5); // center by default
-  const y = useMotionValue(0.5);
-
-  // Tilt effect transforms
-  const rotateX = useTransform(y, [0, 1], [15, -15]); // top-bottom
-  const rotateY = useTransform(x, [0, 1], [-15, 15]); // left-right
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const rect = cardRef.current.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width;
-    const py = (e.clientY - rect.top) / rect.height;
-    x.set(px);
-    y.set(py);
+  // Rolling border line animation variants
+  const rollingBorderVariants = {
+    animate: {
+      strokeDashoffset: [0, -100],
+      transition: {
+        duration: 3,
+        repeat: Infinity,
+        ease: "linear",
+      },
+    },
   };
 
-  const handleMouseLeave = () => {
-    x.set(0.5);
-    y.set(0.5);
+  // Staggered animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1,
+      },
+    },
   };
 
-  useEffect(() => {
-    x.set(0.3);
-    y.set(0.4);
-  }, []);
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.8,
+        ease: [0.25, 0.46, 0.45, 0.94],
+      },
+    },
+  };
+
 
   return (
-    <section className="py-20 ">
-      <div className="container mx-auto px-4">
+    <section className="py-20 relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
-          className="grid md:grid-cols-2 gap-12 items-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          {/* Tilted Floating Image with Shadow */}
-          <motion.div
-            ref={cardRef}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            style={{ perspective: 1000 }}
-            className="relative w-full max-w-sm mx-auto"
-          >
-            {/* Shadow below the card */}
-            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[90%] h-6 bg-black/40 blur-md rounded-full z-0"></div>
+          className="absolute top-20 left-10 w-32 h-32 bg-emerald-400/10 rounded-full blur-xl"
+          animate={{
+            x: [0, 50, 0],
+            y: [0, -30, 0],
+            scale: [1, 1.2, 1],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute bottom-20 right-10 w-24 h-24 bg-blue-400/10 rounded-full blur-xl"
+          animate={{
+            x: [0, -40, 0],
+            y: [0, 40, 0],
+            scale: [1, 0.8, 1],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      </div>
 
-            {/* Image card */}
+      <div className="container mx-auto px-4 relative z-10">
+        {/* Centered Content */}
+        <motion.div
+          className="max-w-4xl mx-auto text-center"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          {/* Title with enhanced animation */}
+          <motion.h2
+            className="text-5xl md:text-6xl font-bold text-emerald-400 mb-12 relative"
+            variants={itemVariants}
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            Who Am I ?
+            {/* Animated underline */}
             <motion.div
-              style={{
-                rotateX,
-                rotateY,
-                rotateZ: -10,
-                transformStyle: 'preserve-3d'
-              }}
-              className="relative z-10 rounded-xl transition-transform"
+              className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 h-1 bg-gradient-to-r from-emerald-400 to-blue-400 rounded-full"
+              initial={{ width: 0 }}
+              whileInView={{ width: "60%" }}
+              transition={{ duration: 1, delay: 0.5 }}
+            />
+          </motion.h2>
+
+          {/* Main description with glass morphism and snake border */}
+          <motion.div
+            className="relative rounded-2xl p-8 md:p-12 overflow-hidden"
+            variants={itemVariants}
+          >
+            {/* Glass morphism background */}
+            <div className="absolute inset-0 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10" />
+            
+            {/* Rolling border line */}
+            <motion.svg
+              className="absolute inset-0 w-full h-full pointer-events-none"
+              variants={rollingBorderVariants}
+              animate="animate"
             >
-              <img
-                src="/toy.png"
-                alt="Profile"
-                className="w-full h-auto object-contain"
+              <rect
+                x="1"
+                y="1"
+                width="calc(100% - 2px)"
+                height="calc(100% - 2px)"
+                rx="15"
+                ry="15"
+                fill="none"
+                stroke="url(#emeraldGradient)"
+                strokeWidth="2"
+                strokeLinecap="round"
               />
-            </motion.div>
+              <defs>
+                <linearGradient id="emeraldGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="transparent" />
+                  <stop offset="50%" stopColor="#10b981" />
+                  <stop offset="100%" stopColor="transparent" />
+                </linearGradient>
+              </defs>
+            </motion.svg>
+            
+            <div className="relative z-10">
+              <motion.p
+                className="text-xl md:text-2xl text-white mb-8 leading-relaxed"
+                variants={itemVariants}
+              >
+                I'm <span className="text-emerald-400 font-semibold">Harshit Soni</span>, a Computer Science student who builds stuff that's smart, scalable, and fast.
+              </motion.p>
+
+              <motion.p
+                className="text-lg md:text-xl text-gray-300 mb-8"
+                variants={itemVariants}
+              >
+                I've worked across:
+              </motion.p>
+
+              {/* Skill categories as horizontal glass morphism cards */}
+              <motion.div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <motion.div
+                  className="group relative rounded-xl p-6 overflow-hidden"
+                  variants={itemVariants}
+                  whileHover={{ 
+                    scale: 1.05,
+                    y: -10,
+                  }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  {/* Glass morphism background */}
+                  <div className="absolute inset-0 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl" />
+                  
+                  {/* Rolling border line */}
+                  <motion.svg
+                    className="absolute inset-0 w-full h-full pointer-events-none"
+                    variants={rollingBorderVariants}
+                    animate="animate"
+                  >
+                    <rect
+                      x="1"
+                      y="1"
+                      width="calc(100% - 2px)"
+                      height="calc(100% - 2px)"
+                      rx="11"
+                      ry="11"
+                      fill="none"
+                      stroke="url(#emeraldGradient1)"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                    />
+                    <defs>
+                      <linearGradient id="emeraldGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="transparent" />
+                        <stop offset="50%" stopColor="#10b981" />
+                        <stop offset="100%" stopColor="transparent" />
+                      </linearGradient>
+                    </defs>
+                  </motion.svg>
+                  <div className="relative z-10 text-center">
+                    <h3 className="text-xl font-semibold text-emerald-400 mb-4">AI & ML</h3>
+                    <p className="text-gray-300 text-sm leading-relaxed">training deep learning models, NLP, RAG, and speech synthesis.</p>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  className="group relative rounded-xl p-6 overflow-hidden"
+                  variants={itemVariants}
+                  whileHover={{ 
+                    scale: 1.05,
+                    y: -10,
+                  }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  {/* Glass morphism background */}
+                  <div className="absolute inset-0 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl" />
+                  
+                  {/* Rolling border line */}
+                  <motion.svg
+                    className="absolute inset-0 w-full h-full pointer-events-none"
+                    variants={rollingBorderVariants}
+                    animate="animate"
+                    style={{ animationDelay: "1s" }}
+                  >
+                    <rect
+                      x="1"
+                      y="1"
+                      width="calc(100% - 2px)"
+                      height="calc(100% - 2px)"
+                      rx="11"
+                      ry="11"
+                      fill="none"
+                      stroke="url(#blueGradient2)"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                    />
+                    <defs>
+                      <linearGradient id="blueGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="transparent" />
+                        <stop offset="50%" stopColor="#3b82f6" />
+                        <stop offset="100%" stopColor="transparent" />
+                      </linearGradient>
+                    </defs>
+                  </motion.svg>
+                  <div className="relative z-10 text-center">
+                    <h3 className="text-xl font-semibold text-blue-400 mb-4">Web & Systems</h3>
+                    <p className="text-gray-300 text-sm leading-relaxed">full-stack apps, real-time communication, Redis, JWT, WebSockets.</p>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  className="group relative rounded-xl p-6 overflow-hidden"
+                  variants={itemVariants}
+                  whileHover={{ 
+                    scale: 1.05,
+                    y: -10,
+                  }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  {/* Glass morphism background */}
+                  <div className="absolute inset-0 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl" />
+                  
+                  {/* Rolling border line */}
+                  <motion.svg
+                    className="absolute inset-0 w-full h-full pointer-events-none"
+                    variants={rollingBorderVariants}
+                    animate="animate"
+                    style={{ animationDelay: "2s" }}
+                  >
+                    <rect
+                      x="1"
+                      y="1"
+                      width="calc(100% - 2px)"
+                      height="calc(100% - 2px)"
+                      rx="11"
+                      ry="11"
+                      fill="none"
+                      stroke="url(#purpleGradient3)"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                    />
+                    <defs>
+                      <linearGradient id="purpleGradient3" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="transparent" />
+                        <stop offset="50%" stopColor="#a855f7" />
+                        <stop offset="100%" stopColor="transparent" />
+                      </linearGradient>
+                    </defs>
+                  </motion.svg>
+                  <div className="relative z-10 text-center">
+                    <h3 className="text-xl font-semibold text-purple-400 mb-4">Cloud & DevOps</h3>
+                    <p className="text-gray-300 text-sm leading-relaxed">Docker, Kubernetes, serverless backends, scalable deployments.</p>
+                  </div>
+                </motion.div>
+              </motion.div>
+
+              {/* Closing statement with special emphasis */}
+              <motion.div
+                className="mt-10 pt-8 border-t border-white/10"
+                variants={itemVariants}
+              >
+                <p className="text-lg md:text-xl text-white font-medium">
+                  I thrive at the intersection of{' '}
+                  <span className="text-emerald-400 font-bold">AI</span> +{' '}
+                  <span className="text-blue-400 font-bold">Web</span> +{' '}
+                  <span className="text-purple-400 font-bold">Cloud</span>,{' '}
+                  turning code into things that actually work{' '}
+                  <span className="text-emerald-400">(and work hard)</span>.
+                </p>
+              </motion.div>
+            </div>
           </motion.div>
 
-          {/* Text Content */}
-          <div className="space-y-6">
-            <motion.h2
-              className="text-3xl font-bold text-emerald-400"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-            >
-              About Me
-            </motion.h2>
-
-            <motion.div
-              className="space-y-4 text-gray-300"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              <p>
-                I'm currently diving deep into tech at IIITV-ICD (B.Tech CSE, 2022-26). I like building things that live on the web and actually <em>do</em> something.
-              </p>
-
-              <div className="space-y-2">
-                <h3 className="text-xl font-semibold text-emerald-400">Frontend Vibes</h3>
-                <p>
-                  React, TypeScript, Tailwind – you name it. I craft smooth, responsive interfaces that feel good to use.
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <h3 className="text-xl font-semibold text-emerald-400">Full Stack Flow</h3>
-                <p>
-                  From the UI to the DB, I’ve got it covered. I enjoy wiring up frontends with Node.js, Express, and MongoDB to build full experiences.
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <h3 className="text-xl font-semibold text-emerald-400">Design with a Beat</h3>
-                <p>
-                  I believe in clean, intuitive design. I’m all about those little UX details that make users smile.
-                </p>
-              </div>
-            </motion.div>
-          </div>
         </motion.div>
       </div>
     </section>

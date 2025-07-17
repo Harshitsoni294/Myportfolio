@@ -2,8 +2,9 @@ import { StarBackground } from './components/StarBackground';
 import { ContactForm } from './components/ContactForm';
 import { TypedText } from './components/TypedText';
 import { AboutSection } from './components/AboutSection';
-import { VirtualLaptop } from './components/VirtualLaptop';
+import DeckOfCardsProjects from './components/VirtualLaptop';
 import Skills from './components/Skills';
+import { TerminalLoader } from './components/TerminalLoader';
 import { motion } from 'framer-motion';
 import { Github, Linkedin, Mail, Download, Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
@@ -11,6 +12,7 @@ import { useState, useEffect } from 'react';
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -31,13 +33,21 @@ function App() {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const scrollToSection = (sectionId) => {
+  const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
       section.scrollIntoView({ behavior: 'smooth' });
       setIsMenuOpen(false);
     }
   };
+
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+  };
+
+  if (isLoading) {
+    return <TerminalLoader onComplete={handleLoadingComplete} />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-900 text-white relative overflow-hidden">
@@ -206,7 +216,7 @@ function App() {
               </div>
             </div>
 
-            <div className="w-full md:w-1/2 md:pl-16">
+            <div className="w-full md:w-1/2 md:pl-16 text-center md:text-left">
               <motion.h1
                 className="text-6xl md:text-7xl font-bold mb-8 leading-tight"
                 initial={{ opacity: 0, y: 20 }}
@@ -224,12 +234,13 @@ function App() {
                 transition={{ duration: 0.8, delay: 0.1 }}
               >
                 <TypedText
-                  strings={[
-                    '👨‍💻 Passionate Programmer...',
-                    '🧩 Full Stack Developer...',
-                    '🎓 B.Tech Student on a Mission...',
-                    '🎨 Creative Designer with a Vision...',
+                  strings={[  
+                    '🤖 AI - ML Enthusiast...',  
+                    '⚡ Full Stack / Systems Developer...',  
+                    '☁️ Cloud and DevOps Explorer...',  
+                    '🧑‍🎓 B.Tech CSE @ IIIT Vadodara...',  
                   ]}
+                  
                 />
               </motion.div>
 
@@ -243,7 +254,7 @@ function App() {
               </motion.p>
 
               <motion.div
-                className="flex space-x-8"
+                className="flex space-x-8 justify-center md:justify-start"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
@@ -286,45 +297,189 @@ function App() {
         {/* Projects Section */}
         <section id="projects" className="pt-8">
           <motion.h2
-            className="text-4xl font-bold text-emerald-400 mb-8"
+            className="text-4xl font-bold text-emerald-400 mb-8 text-center relative"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
             Projects
+            {/* Animated underline */}
+            <motion.div
+              className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 h-1 bg-gradient-to-r from-emerald-400 to-blue-400 rounded-full"
+              initial={{ width: 0 }}
+              whileInView={{ width: "60%" }}
+              transition={{ duration: 1, delay: 0.5 }}
+            />
           </motion.h2>
-          <VirtualLaptop />
+          <DeckOfCardsProjects />
         </section>
 
         {/* Experience Section */}
         <section id="experience" className="pt-8">
-          <h2 className="text-4xl font-bold text-emerald-400 mb-8">Roles of responsibilities</h2>
-          <div className="space-y-4">
-            <div className="bg-black/30 backdrop-blur-sm rounded-xl p-6 border border-white/10">
-              <h3 className="text-2xl font-bold mb-4">Tech Committee Member</h3>
-              <ul className="list-disc list-inside text-gray-300 space-y-2">
-                <li>Led and organized 5+ technical events</li>
-                <li>Established cross-IIIT collaborations</li>
-                <li>Managed team of volunteers</li>
-                <li>Increased event participation by 40%</li>
-              </ul>
-            </div>
-            <div className="bg-black/30 backdrop-blur-sm rounded-xl p-6 border border-white/10">
-              <h3 className="text-2xl font-bold mb-4">Literary Club Secretary</h3>
-              <ul className="list-disc list-inside text-gray-300 space-y-2">
-                <li>Successfully organized 10+ literary events</li>
-                <li>Increased club engagement by 30%</li>
-                <li>Created and managed content strategy</li>
-                <li>Mentored junior members</li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <motion.h2 
+            className="text-4xl font-bold text-emerald-400 mb-12 text-center relative"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+          >
+            Experience
+            {/* Animated underline */}
+            <motion.div
+              className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 h-1 bg-gradient-to-r from-emerald-400 to-blue-400 rounded-full"
+              initial={{ width: 0 }}
+              whileInView={{ width: "60%" }}
+              transition={{ duration: 1, delay: 0.5 }}
+            />
+          </motion.h2>
+          
+          {/* Internships */}
+          <motion.div 
+            className="mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            <h3 className="text-3xl font-bold text-blue-400 mb-8 text-center">Internships</h3>
+            <div className="grid gap-8">
+              {/* Microsoft Internship */}
+              <motion.div 
+                className="bg-black/30 backdrop-blur-sm rounded-xl p-8 border border-white/10 hover:border-emerald-400/30 transition-all duration-300 group hover:shadow-lg hover:shadow-emerald-400/10"
+                whileHover={{ y: -5, scale: 1.02 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+                  <div>
+                    <h4 className="text-2xl font-bold text-emerald-300 group-hover:text-emerald-200 transition-colors duration-300">Microsoft AI & Azure Internship</h4>
+                    <p className="text-lg text-blue-300 font-medium">AI Intern • via Edunet Foundation</p>
+                    <p className="text-gray-400 text-sm">1 month</p>
+                  </div>
+                </div>
+                <ul className="list-disc list-inside text-gray-300 space-y-2 mb-6">
+                  <li>Completed a 4-week internship with 40+ hours of AI and Azure training via Microsoft Learn</li>
+                  <li>Completed 15+ Microsoft Learn modules on GenAI, neural networks, and image processing</li>
+                  <li>Built an AI content moderation system using Azure services with 95% accuracy, automatically masking explicit content and translating harmful text</li>
+                  <li>Deployed with a serverless backend and React frontend</li>
+                </ul>
+                <div className="flex flex-wrap gap-3">
+                  <motion.button
+                    className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-lg font-medium hover:from-blue-500 hover:to-blue-400 transition-all duration-300 flex items-center gap-2 text-sm"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    🏆 View Certificate
+                  </motion.button>
+                  <span className="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-xs border border-blue-500/30">Azure</span>
+                  <span className="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-xs border border-emerald-500/30">AI/ML</span>
+                  <span className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-xs border border-purple-500/30">React</span>
+                </div>
+              </motion.div>
 
+              {/* Acxiom Internship */}
+              <motion.div 
+                className="bg-black/30 backdrop-blur-sm rounded-xl p-8 border border-white/10 hover:border-emerald-400/30 transition-all duration-300 group hover:shadow-lg hover:shadow-emerald-400/10"
+                whileHover={{ y: -5, scale: 1.02 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+                  <div>
+                    <h4 className="text-2xl font-bold text-emerald-300 group-hover:text-emerald-200 transition-colors duration-300">Acxiom Technologies</h4>
+                    <p className="text-lg text-blue-300 font-medium">Project Intern – AI Team</p>
+                    <p className="text-gray-400 text-sm">2 months</p>
+                  </div>
+                </div>
+                <ul className="list-disc list-inside text-gray-300 space-y-2 mb-6">
+                  <li>Built a Retrieval-Augmented Generation (RAG) Q&A system with LangChain and ChromaDB, processing 10,000+ documents</li>
+                  <li>Implemented document ingestion, chunking, and embeddings for accurate and efficient retrieval</li>
+                  <li>Integrated large language models with context-aware retrieval, improving team productivity by 60%</li>
+                  <li>Deployed a FastAPI service with analytics and summarization features, reducing duplicate queries by 25%</li>
+                </ul>
+                <div className="flex flex-wrap gap-3">
+                  <motion.button
+                    className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-lg font-medium hover:from-blue-500 hover:to-blue-400 transition-all duration-300 flex items-center gap-2 text-sm"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    🏆 View Certificate
+                  </motion.button>
+                  <span className="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-xs border border-emerald-500/30">RAG</span>
+                  <span className="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-xs border border-blue-500/30">LangChain</span>
+                  <span className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-xs border border-purple-500/30">FastAPI</span>
+                  <span className="px-3 py-1 bg-orange-500/20 text-orange-300 rounded-full text-xs border border-orange-500/30">ChromaDB</span>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+
+          {/* Leadership & Contributions */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+          >
+            <h3 className="text-3xl font-bold text-blue-400 mb-8 text-center">Leadership & Contributions</h3>
+            <div className="space-y-6">
+              <motion.div 
+                className="bg-black/30 backdrop-blur-sm rounded-xl p-8 border border-white/10 hover:border-emerald-400/30 transition-all duration-300 group hover:shadow-lg hover:shadow-emerald-400/10"
+                whileHover={{ y: -5, scale: 1.02 }}
+                transition={{ duration: 0.2 }}
+              >
+                <h4 className="text-2xl font-bold text-emerald-300 mb-4 group-hover:text-emerald-200 transition-colors duration-300">Tech Committee Member</h4>
+                <ul className="list-disc list-inside text-gray-300 space-y-2 mb-6">
+                  <li>Led and organized 5+ technical events</li>
+                  <li>Established cross-IIIT collaborations</li>
+                  <li>Managed team of volunteers</li>
+                  <li>Increased event participation by 40%</li>
+                </ul>
+                <div className="flex flex-wrap gap-3">
+                  
+                  <span className="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-xs border border-emerald-500/30">Leadership</span>
+                  <span className="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-xs border border-blue-500/30">Event Management</span>
+                </div>
+              </motion.div>
+              
+              <motion.div 
+                className="bg-black/30 backdrop-blur-sm rounded-xl p-8 border border-white/10 hover:border-emerald-400/30 transition-all duration-300 group hover:shadow-lg hover:shadow-emerald-400/10"
+                whileHover={{ y: -5, scale: 1.02 }}
+                transition={{ duration: 0.2 }}
+              >
+                <h4 className="text-2xl font-bold text-emerald-300 mb-4 group-hover:text-emerald-200 transition-colors duration-300">Literary Club Secretary</h4>
+                <ul className="list-disc list-inside text-gray-300 space-y-2 mb-6">
+                  <li>Successfully organized 10+ literary events</li>
+                  <li>Increased club engagement by 30%</li>
+                  <li>Created and managed content strategy</li>
+                  <li>Mentored junior members</li>
+                </ul>
+                <div className="flex flex-wrap gap-3">
+                  
+                  <span className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-xs border border-purple-500/30">Content Strategy</span>
+                  <span className="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-xs border border-emerald-500/30">Mentoring</span>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        </section>
         {/* Certificates Section */}
         <section id="certificates" className="pt-8">
-          <h2 className="text-4xl font-bold text-emerald-400 mb-8">Certificates</h2>
+          <motion.h2 
+            className="text-4xl font-bold text-emerald-400 mb-8 text-center relative"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+          >
+            Certificates
+            {/* Animated underline */}
+            <motion.div
+              className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 h-1 bg-gradient-to-r from-emerald-400 to-blue-400 rounded-full"
+              initial={{ width: 0 }}
+              whileInView={{ width: "60%" }}
+              transition={{ duration: 1, delay: 0.5 }}
+            />
+          </motion.h2>
           <div className="grid md:grid-cols-3 gap-6">
             <div className="bg-black/30 backdrop-blur-sm rounded-xl p-6 border border-white/10">
               <div className="w-full h-48 mb-4 overflow-hidden">
@@ -366,7 +521,22 @@ function App() {
         
         {/* Contact Section */}
         <section id="contact" className="pt-8 pb-24">
-          <h2 className="text-4xl font-bold text-emerald-400 mb-8">Get in Touch</h2>
+          <motion.h2 
+            className="text-4xl font-bold text-emerald-400 mb-8 text-center relative"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+          >
+            Get in Touch
+            {/* Animated underline */}
+            <motion.div
+              className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 h-1 bg-gradient-to-r from-emerald-400 to-blue-400 rounded-full"
+              initial={{ width: 0 }}
+              whileInView={{ width: "60%" }}
+              transition={{ duration: 1, delay: 0.5 }}
+            />
+          </motion.h2>
           <ContactForm />
         </section>
       </main>
