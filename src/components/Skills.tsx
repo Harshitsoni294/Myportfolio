@@ -4,7 +4,7 @@ import {
   SiTailwindcss, SiBootstrap,
   SiNodedotjs, SiExpress, SiFastapi,
   SiPython, SiPytorch, SiTensorflow, SiScikitlearn,
-  SiLangchain, SiNumpy, SiPandas,
+  SiLangchain, SiNumpy, SiPandas, SiOpencv,
   SiMongodb, SiMysql, SiRedis,
   SiJupyter, SiDocker, SiKubernetes, SiGit, SiGooglecolab
 } from "react-icons/si";
@@ -39,6 +39,7 @@ const skillCategories = [
       { icon: <SiTensorflow size={50} color="#FF6F00" />, name: 'TensorFlow' },
       { icon: <SiScikitlearn size={50} color="#F7931E" />, name: 'Scikit-learn' },
       { icon: <SiLangchain size={50} color="#00D4AA" />, name: 'LangChain' },
+      { icon: <SiOpencv size={50} color="#5C3EE8" />, name: 'OpenCV' },
       { icon: <TbBrandChrome size={50} color="#4285F4" />, name: 'ChromaDB' },
       { icon: <SiNumpy size={50} color="#4DABF7" />, name: 'NumPy' },
       { icon: <SiPandas size={50} color="#E599F7" />, name: 'Pandas' },
