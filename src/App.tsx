@@ -76,17 +76,18 @@ function App() {
           </a>
 
           <a
-            href="/Harshit_CV.pdf"
-            download
-            className="text-white text-sm flex flex-col items-center justify-center group"
-          >
-            <div className="bg-white/10 p-3 rounded-full mb-1 text-emerald-400 group-hover:bg-white group-hover:text-emerald-500 transition-colors">
-              <Download size={18} />
-            </div>
-            <span className="text-center leading-tight group-hover:text-white transition-colors">
-              Download<br />CV
-            </span>
-          </a>
+  href="Harshit_CV.pdf"
+  download="HarshitSoni_CV.pdf"
+  className="text-white text-sm flex flex-col items-center justify-center group"
+>
+  <div className="bg-white/10 p-3 rounded-full mb-1 text-emerald-400 group-hover:bg-white group-hover:text-emerald-500 transition-colors">
+    <Download size={18} />
+  </div>
+  <span className="text-center leading-tight group-hover:text-white transition-colors">
+    Download<br />CV
+  </span>
+</a>
+
         </div>
 
         {/* Email at bottom */}
@@ -124,7 +125,7 @@ function App() {
 
           <a
             href="/Harshit_CV.pdf"
-            download
+            download="Harshit_Soni_CV.pdf"
             className="flex-1 h-full flex flex-col items-center justify-center text-emerald-400"
           >
             <Download size={24} />
@@ -364,16 +365,18 @@ function App() {
                   <li>Deployed with a serverless backend and React frontend</li>
                 </ul>
                 <div className="flex flex-wrap gap-3">
-                  <motion.button
+                  <motion.a
+                    href="/microsoft.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-lg font-medium hover:from-blue-500 hover:to-blue-400 transition-all duration-300 flex items-center gap-2 text-sm"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     🏆 View Certificate
-                  </motion.button>
+                  </motion.a>
                   <span className="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-xs border border-blue-500/30">Azure</span>
                   <span className="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-xs border border-emerald-500/30">AI/ML</span>
-                  <span className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-xs border border-purple-500/30">React</span>
                 </div>
               </motion.div>
 
@@ -397,13 +400,16 @@ function App() {
                   <li>Deployed a FastAPI service with analytics and summarization features, reducing duplicate queries by 25%</li>
                 </ul>
                 <div className="flex flex-wrap gap-3">
-                  <motion.button
+                  <motion.a
+                    href="/acxiom.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-lg font-medium hover:from-blue-500 hover:to-blue-400 transition-all duration-300 flex items-center gap-2 text-sm"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     🏆 View Certificate
-                  </motion.button>
+                  </motion.a>
                   <span className="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-xs border border-emerald-500/30">RAG</span>
                   <span className="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-xs border border-blue-500/30">LangChain</span>
                   <span className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-xs border border-purple-500/30">FastAPI</span>
