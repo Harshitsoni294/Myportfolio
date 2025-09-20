@@ -91,7 +91,7 @@ export const TerminalLoader = ({ onComplete }: TerminalLoaderProps) => {
 
             <a
               href="/resume.pdf"
-              download
+              download="Harshit_CV.pdf"
               className="text-white text-sm flex flex-col items-center justify-center group"
             >
               <div className="bg-white/10 p-3 rounded-full mb-1 text-emerald-400 group-hover:bg-white group-hover:text-emerald-500 transition-colors">
@@ -137,7 +137,7 @@ export const TerminalLoader = ({ onComplete }: TerminalLoaderProps) => {
 
             <a
               href="/resume.pdf"
-              download
+              download="Harshit_CV.pdf"
               className="flex-1 h-full flex flex-col items-center justify-center text-emerald-400"
             >
               <Download size={24} />
