@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { StarBackground } from './StarBackground';
-import { Github, Linkedin, Mail, Download, Menu, X } from 'lucide-react';
+import { Github, Download, Menu, MessageSquare } from 'lucide-react';
 
 interface TerminalLoaderProps {
   onComplete: () => void;
@@ -101,6 +101,18 @@ export const TerminalLoader = ({ onComplete }: TerminalLoaderProps) => {
                 Download<br />CV
               </span>
             </a>
+
+            <a
+              href="/feedback"
+              className="text-white text-sm flex flex-col items-center justify-center group"
+            >
+              <div className="bg-white/10 p-3 rounded-full mb-1 text-emerald-400 group-hover:bg-white group-hover:text-emerald-500 transition-colors">
+                <MessageSquare size={18} />
+              </div>
+              <span className="text-center leading-tight group-hover:text-white transition-colors">
+                Add<br />Feedback
+              </span>
+            </a>
           </div>
 
           {/* Email at bottom */}
@@ -142,6 +154,14 @@ export const TerminalLoader = ({ onComplete }: TerminalLoaderProps) => {
             >
               <Download size={24} />
               <span className="text-xs mt-1">CV</span>
+            </a>
+
+            <a
+              href="/feedback"
+              className="flex-1 h-full flex flex-col items-center justify-center text-emerald-400"
+            >
+              <MessageSquare size={24} />
+              <span className="text-xs mt-1">Feedback</span>
             </a>
           </nav>
         </div>
