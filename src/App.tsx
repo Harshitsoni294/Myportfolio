@@ -75,7 +75,7 @@ function App() {
           </a>
 
           <a
-  href="/resume.pdf"
+  href="/Harshit_CV.pdf"
   download="Harshit_CV.pdf"
   className="text-white text-sm flex flex-col items-center justify-center group"
 >
@@ -123,7 +123,7 @@ function App() {
           </a>
 
           <a
-            href="/resume.pdf"
+            href="/Harshit_CV.pdf"
             download="Harshit_CV.pdf"
             className="flex-1 h-full flex flex-col items-center justify-center text-emerald-400"
           >
