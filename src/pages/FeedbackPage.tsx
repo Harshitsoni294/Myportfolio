@@ -290,7 +290,7 @@ export const FeedbackPage = () => {
                 <StarRating
                   rating={workRating}
                   setRating={setWorkRating}
-                  maxStars={10}
+                  maxStars={5}
                   label="Rate Harshit's Work *"
                 />
                 <input type="hidden" name="workRating" value={workRating} />
@@ -363,7 +363,7 @@ export const FeedbackPage = () => {
                 <StarRating
                   rating={portfolioRating}
                   setRating={setPortfolioRating}
-                  maxStars={10}
+                  maxStars={5}
                   label="Rate Harshit's Portfolio *"
                 />
                 <input type="hidden" name="portfolioRating" value={portfolioRating} />

@@ -58,17 +58,27 @@ export const Layout = () => {
         <div className="flex flex-col items-center space-y-10">
           <button
             onClick={toggleMenu}
-            className="bg-white/10 p-3 rounded-full text-emerald-400 hover:bg-white hover:text-emerald-500 transition-colors"
+            className="text-white text-sm flex flex-col items-center justify-center group"
             aria-label="Menu"
           >
-            <Menu size={20} />
+            <div className="bg-white/10 p-3 rounded-full mb-1 text-emerald-400 group-hover:bg-white group-hover:text-emerald-500 transition-colors">
+              <Menu size={18} />
+            </div>
+            <span className="text-center text-[10px] leading-tight group-hover:text-white transition-colors">
+              Menu
+            </span>
           </button>
 
           <a
             href="https://github.com/Harshitsoni294"
-            className="bg-white/10 p-3 rounded-full text-emerald-400 hover:bg-white hover:text-emerald-500 transition-colors"
+            className="text-white text-sm flex flex-col items-center justify-center group"
           >
-            <Github size={20} />
+            <div className="bg-white/10 p-3 rounded-full mb-1 text-emerald-400 group-hover:bg-white group-hover:text-emerald-500 transition-colors">
+              <Github size={18} />
+            </div>
+            <span className="text-center text-[10px] leading-tight group-hover:text-white transition-colors">
+              Github
+            </span>
           </a>
 
           <a
@@ -79,7 +89,7 @@ export const Layout = () => {
             <div className="bg-white/10 p-3 rounded-full mb-1 text-emerald-400 group-hover:bg-white group-hover:text-emerald-500 transition-colors">
               <Download size={18} />
             </div>
-            <span className="text-center leading-tight group-hover:text-white transition-colors">
+            <span className="text-center text-[10px] leading-tight group-hover:text-white transition-colors">
               Download<br />CV
             </span>
           </a>
@@ -96,7 +106,7 @@ export const Layout = () => {
             }`}>
               <MessageSquare size={18} />
             </div>
-            <span className="text-center leading-tight group-hover:text-white transition-colors">
+            <span className="text-center text-[10px] leading-tight group-hover:text-white transition-colors">
               Add<br />Feedback
             </span>
           </button>

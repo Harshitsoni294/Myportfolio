@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { StarBackground } from './StarBackground';
 import { Github, Download, Menu, MessageSquare } from 'lucide-react';
 
@@ -19,6 +20,7 @@ export const TerminalLoader = ({ onComplete }: TerminalLoaderProps) => {
   const [typedText, setTypedText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
   const [isComplete, setIsComplete] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const cursorInterval = setInterval(() => {
@@ -74,19 +76,29 @@ export const TerminalLoader = ({ onComplete }: TerminalLoaderProps) => {
           <div className="flex flex-col items-center space-y-10">
             {/* Menu Button */}
             <button
-              className="bg-white/10 p-3 rounded-full text-emerald-400 hover:bg-white hover:text-emerald-500 transition-colors"
+              className="text-white text-sm flex flex-col items-center justify-center group"
               aria-label="Menu"
             >
-              <Menu size={20} />
+              <div className="bg-white/10 p-3 rounded-full mb-1 text-emerald-400 group-hover:bg-white group-hover:text-emerald-500 transition-colors">
+                <Menu size={18} />
+              </div>
+              <span className="text-center text-[10px] leading-tight group-hover:text-white transition-colors">
+                Menu
+              </span>
             </button>
 
             <a
               href="https://github.com/Harshitsoni294"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white/10 p-3 rounded-full text-emerald-400 hover:bg-white hover:text-emerald-500 transition-colors"
+              className="text-white text-sm flex flex-col items-center justify-center group"
             >
-              <Github size={20} />
+              <div className="bg-white/10 p-3 rounded-full mb-1 text-emerald-400 group-hover:bg-white group-hover:text-emerald-500 transition-colors">
+                <Github size={18} />
+              </div>
+              <span className="text-center text-[10px] leading-tight group-hover:text-white transition-colors">
+                Github
+              </span>
             </a>
 
             <a
@@ -97,22 +109,22 @@ export const TerminalLoader = ({ onComplete }: TerminalLoaderProps) => {
               <div className="bg-white/10 p-3 rounded-full mb-1 text-emerald-400 group-hover:bg-white group-hover:text-emerald-500 transition-colors">
                 <Download size={18} />
               </div>
-              <span className="text-center leading-tight group-hover:text-white transition-colors">
+              <span className="text-center text-[10px] leading-tight group-hover:text-white transition-colors">
                 Download<br />CV
               </span>
             </a>
 
-            <a
-              href="/feedback"
+            <button
+              onClick={() => navigate('/feedback')}
               className="text-white text-sm flex flex-col items-center justify-center group"
             >
               <div className="bg-white/10 p-3 rounded-full mb-1 text-emerald-400 group-hover:bg-white group-hover:text-emerald-500 transition-colors">
                 <MessageSquare size={18} />
               </div>
-              <span className="text-center leading-tight group-hover:text-white transition-colors">
+              <span className="text-center text-[10px] leading-tight group-hover:text-white transition-colors">
                 Add<br />Feedback
               </span>
-            </a>
+            </button>
           </div>
 
           {/* Email at bottom */}
@@ -156,13 +168,13 @@ export const TerminalLoader = ({ onComplete }: TerminalLoaderProps) => {
               <span className="text-xs mt-1">CV</span>
             </a>
 
-            <a
-              href="/feedback"
+            <button
+              onClick={() => navigate('/feedback')}
               className="flex-1 h-full flex flex-col items-center justify-center text-emerald-400"
             >
               <MessageSquare size={24} />
               <span className="text-xs mt-1">Feedback</span>
-            </a>
+            </button>
           </nav>
         </div>
 
