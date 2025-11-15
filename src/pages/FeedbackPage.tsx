@@ -1,17 +1,14 @@
 import { useState, useEffect } from 'react';
 import { StarRating } from '../components/StarRating';
 import { motion } from 'framer-motion';
-import { Upload, X, MessageSquare } from 'lucide-react';
+import { MessageSquare } from 'lucide-react';
 import { useForm, ValidationError } from '@formspree/react';
 import { useNavigate } from 'react-router-dom';
 
 export const FeedbackPage = () => {
   const [workRating, setWorkRating] = useState(0);
   const [portfolioRating, setPortfolioRating] = useState(0);
-  const [photoUrl, setPhotoUrl] = useState('');
-  const [isUploading, setIsUploading] = useState(false);
-  const [uploadError, setUploadError] = useState('');
-  const [photoPreview, setPhotoPreview] = useState<string>('');
+  
   
   const [state, handleSubmit] = useForm("mqaqlenn");
   const navigate = useNavigate();
@@ -25,144 +22,7 @@ export const FeedbackPage = () => {
     }
   }, [state.succeeded, navigate]);
 
-  const handlePhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    // Validate file type
-    if (!file.type.startsWith('image/')) {
-      setUploadError('Please upload an image file (JPG, PNG, etc.)');
-      return;
-    }
-
-    // Validate file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      setUploadError('File size must be less than 5MB');
-      return;
-    }
-
-    setUploadError('');
-
-    // Create preview
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setPhotoPreview(reader.result as string);
-    };
-    reader.readAsDataURL(file);
-
-    // Upload to Dropbox
-    await uploadToDropbox(file);
-  };
-
-  const uploadToDropbox = async (file: File) => {
-    setIsUploading(true);
-    setUploadError('');
-
-    try {
-      // Get Dropbox token from environment variable or use placeholder
-      const DROPBOX_ACCESS_TOKEN = import.meta.env.VITE_DROPBOX_ACCESS_TOKEN || '';
-      
-      if (!DROPBOX_ACCESS_TOKEN || DROPBOX_ACCESS_TOKEN === '') {
-        console.warn('⚠️ Dropbox token not configured. Photo will not be uploaded.');
-        console.log('📝 To enable photo uploads:');
-        console.log('1. Create .env file in project root');
-        console.log('2. Add: VITE_DROPBOX_ACCESS_TOKEN=your_token');
-        console.log('3. See DROPBOX_SETUP_GUIDE.md for instructions');
-        
-        setUploadError('Photo upload not configured. Form will still work without photo.');
-        setIsUploading(false);
-        return;
-      }
-
-      // Upload to Dropbox
-      const timestamp = Date.now();
-      const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
-      const path = `/feedback-photos/${timestamp}_${safeName}`;
-
-      const uploadResponse = await fetch('https://content.dropboxapi.com/2/files/upload', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${DROPBOX_ACCESS_TOKEN}`,
-          'Content-Type': 'application/octet-stream',
-          'Dropbox-API-Arg': JSON.stringify({
-            path: path,
-            mode: 'add',
-            autorename: true,
-            mute: false
-          })
-        },
-        body: file
-      });
-
-      if (!uploadResponse.ok) {
-        const errorData = await uploadResponse.json();
-        console.error('Dropbox upload error:', errorData);
-        throw new Error('Upload failed. Please check your Dropbox token and permissions.');
-      }
-
-      const uploadData = await uploadResponse.json();
-      console.log('✅ File uploaded to Dropbox:', uploadData.path_display);
-      
-      // Create shareable link
-      const linkResponse = await fetch('https://api.dropboxapi.com/2/sharing/create_shared_link_with_settings', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${DROPBOX_ACCESS_TOKEN}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          path: uploadData.path_display,
-          settings: {
-            requested_visibility: 'public'
-          }
-        })
-      });
-
-      if (!linkResponse.ok) {
-        // Try to get existing shared link instead
-        const existingLinkResponse = await fetch('https://api.dropboxapi.com/2/sharing/list_shared_links', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${DROPBOX_ACCESS_TOKEN}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            path: uploadData.path_display
-          })
-        });
-
-        if (existingLinkResponse.ok) {
-          const existingData = await existingLinkResponse.json();
-          if (existingData.links && existingData.links.length > 0) {
-            const publicUrl = existingData.links[0].url.replace('dl=0', 'raw=1');
-            setPhotoUrl(publicUrl);
-            console.log('✅ Using existing shared link:', publicUrl);
-            setIsUploading(false);
-            return;
-          }
-        }
-
-        throw new Error('Failed to create shareable link');
-      }
-
-      const linkData = await linkResponse.json();
-      const publicUrl = linkData.url.replace('dl=0', 'raw=1');
-      setPhotoUrl(publicUrl);
-      console.log('✅ Photo uploaded successfully! URL:', publicUrl);
-      
-    } catch (error) {
-      console.error('Upload error:', error);
-      setUploadError(error instanceof Error ? error.message : 'Upload failed. Please try again.');
-    } finally {
-      setIsUploading(false);
-    }
-  };
-
-  const removePhoto = () => {
-    setPhotoPreview('');
-    setPhotoUrl('');
-    setUploadError('');
-  };
+  
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -296,67 +156,7 @@ export const FeedbackPage = () => {
                 <input type="hidden" name="workRating" value={workRating} />
               </div>
 
-              {/* Upload Photo */}
-              <div>
-                <label className="block text-white mb-2 font-medium">
-                  Upload your photo to appear with your testimonial on Harshit’s portfolio{' '}
-                  <span className="text-gray-400 text-sm">(Optional)</span>
-                </label>
-                
-                {!photoPreview ? (
-                  <label
-                    htmlFor="photo"
-                    className="flex flex-col items-center justify-center w-full h-32 bg-black/30 backdrop-blur-sm rounded-lg border-2 border-dashed border-white/10 cursor-pointer hover:border-emerald-400/50 transition-all duration-300"
-                  >
-                    <Upload className="text-emerald-400 mb-2" size={32} />
-                    <span className="text-gray-300">Click to upload photo</span>
-                    <span className="text-gray-500 text-sm mt-1">JPG, PNG - Max 5MB</span>
-                    <input
-                      id="photo"
-                      type="file"
-                      accept="image/*"
-                      onChange={handlePhotoChange}
-                      className="hidden"
-                    />
-                  </label>
-                ) : (
-                  <div className="relative inline-block">
-                    <img
-                      src={photoPreview}
-                      alt="Preview"
-                      className="w-32 h-32 object-cover rounded-lg border border-emerald-400/50"
-                    />
-                    <button
-                      type="button"
-                      onClick={removePhoto}
-                      className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors shadow-lg"
-                    >
-                      <X size={16} />
-                    </button>
-                    {photoUrl && (
-                      <div className="mt-2 text-sm text-emerald-400">
-                        ✅ Photo uploaded successfully!
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {isUploading && (
-                  <div className="mt-2 flex items-center gap-2">
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-emerald-400"></div>
-                    <span className="text-emerald-400">Uploading photo...</span>
-                  </div>
-                )}
-                
-                {uploadError && (
-                  <p className="text-yellow-400 mt-2 text-sm">
-                    ⚠️ {uploadError}
-                  </p>
-                )}
-                
-                {/* Hidden field for photo URL */}
-                <input type="hidden" name="photoUrl" value={photoUrl} />
-              </div>
+              {/* Photo upload removed (no photos collected) */}
 
               {/* Rate Portfolio */}
               <div>
